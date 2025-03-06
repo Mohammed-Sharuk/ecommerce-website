@@ -15,9 +15,9 @@ app.use(express.json());
 app.use(cors()); 
 
 // MongoDB Connection
-mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/ecommerceDB')
-    .then(() => console.log('MongoDB connected successfully'))
-    .catch((err) => console.error('MongoDB connection error:', err));
+mongoose.connect(process.env.MONGO_URI || 'mongodb+srv://Sharuk:Sharuk123@ecommercecluster.ntpje.mongodb.net/?retryWrites=true&w=majority&appName=EcommerceCluster')
+.then(() => console.log('MongoDB connected successfully'))
+.catch((err) => console.error('MongoDB connection error:', err));
 
 // Routes
 app.use('/api/products', productsRoute);
