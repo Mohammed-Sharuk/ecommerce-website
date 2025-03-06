@@ -3,7 +3,8 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 
-const API_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000';
+// Use the deployed backend URL
+const API_URL = import.meta.env.VITE_BACKEND_URL || 'https://ecommerce-website-mbtr.onrender.com';
 
 const ProductDetails = () => {
   const { id } = useParams();

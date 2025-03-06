@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-const API_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000/api/products';
+// Use the deployed backend URL
+const API_URL = import.meta.env.VITE_BACKEND_URL || 'https://ecommerce-website-mbtr.onrender.com/api/products';
 
 export const fetchProducts = async () => {
   try {
