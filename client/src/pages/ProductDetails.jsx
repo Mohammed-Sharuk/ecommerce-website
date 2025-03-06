@@ -3,6 +3,8 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 
+const API_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000';
+
 const ProductDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -11,7 +13,7 @@ const ProductDetails = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/products/${id}`);
+        const response = await axios.get(`${API_URL}/api/products/${id}`);
         setProduct(response.data);
       } catch (error) {
         console.error("Error fetching product details:", error);
@@ -22,7 +24,7 @@ const ProductDetails = () => {
   }, [id]);
 
   const handleAddToCart = async () => {
-    const token = localStorage.getItem("token"); // Check if user is logged in
+    const token = localStorage.getItem("token");
 
     if (!token) {
       alert("⚠️ Please login to add items to your cart.");
@@ -32,12 +34,12 @@ const ProductDetails = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/cart",
+        `${API_URL}/api/cart`,
         { productId: product._id, quantity: 1 },
         {
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`, // Send token for authentication
+            Authorization: `Bearer ${token}`,
           },
         }
       );
