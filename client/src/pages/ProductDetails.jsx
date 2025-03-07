@@ -1,9 +1,7 @@
-// src/pages/ProductDetails.jsx
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 
-// Use the deployed backend URL
 const API_URL = import.meta.env.VITE_BACKEND_URL || 'https://ecommerce-website-mbtr.onrender.com';
 
 const ProductDetails = () => {
@@ -45,11 +43,7 @@ const ProductDetails = () => {
         }
       );
 
-      if (response.status === 200) {
-        alert("✅ Product added to cart!");
-      } else {
-        alert("⚠️ Failed to add item to cart.");
-      }
+      alert("✅ Product added to cart!");
     } catch (error) {
       console.error("Error adding to cart:", error);
       alert("❌ Error adding to cart.");
@@ -68,11 +62,7 @@ const ProductDetails = () => {
           <h1 className="text-3xl font-bold mb-4">{product.name}</h1>
           <p className="text-gray-700 mb-4">{product.description}</p>
           <p className="text-2xl font-semibold mb-4">${product.price}</p>
-
-          <button
-            onClick={handleAddToCart}
-            className="bg-black text-white px-6 py-2 rounded hover:bg-gray-800"
-          >
+          <button onClick={handleAddToCart} className="bg-black text-white px-6 py-2 rounded hover:bg-gray-800">
             Add to Cart
           </button>
         </div>

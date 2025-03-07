@@ -1,4 +1,4 @@
-const express = require('express');
+const express = require('express'); 
 const User = require('../models/User');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
@@ -35,26 +35,6 @@ router.post('/login', async (req, res) => {
 
         const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
         res.json({ token });
-    } catch (err) {
-        res.status(500).json({ message: "Server error" });
-    }
-});
-
-// Forgot Password
-router.post('/forgot-password', async (req, res) => {
-    const { email } = req.body;
-
-    try {
-        const user = await User.findOne({ email });
-        if (!user) return res.status(400).json({ message: "User not found" });
-
-        const resetToken = crypto.randomBytes(32).toString('hex');
-        user.resetToken = resetToken;
-        user.resetTokenExpires = Date.now() + 3600000; // 1 hour
-        await user.save();
-
-        // Send Email (Setup nodemailer)
-        res.json({ message: "Reset link sent to email", resetToken });
     } catch (err) {
         res.status(500).json({ message: "Server error" });
     }

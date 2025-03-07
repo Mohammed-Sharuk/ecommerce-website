@@ -1,7 +1,8 @@
-// Updated Collection.jsx
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import ProductCard from "../components/ProductCard";
+
+const API_URL = import.meta.env.VITE_BACKEND_URL || 'https://ecommerce-website-mbtr.onrender.com';
 
 const categories = ["Men", "Women", "Kids"];
 const types = ["Topwear", "Bottomwear", "Winterwear"];
@@ -11,14 +12,17 @@ const Collection = () => {
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [selectedTypes, setSelectedTypes] = useState([]);
   const [sortOrder, setSortOrder] = useState("");
+  const [error, setError] = useState("");
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/products");
+        setError(""); 
+        const response = await axios.get(`${API_URL}/api/products`);
         setProductsData(response.data);
       } catch (error) {
         console.error("Error fetching products:", error);
+        setError("Failed to load products. Please try again later.");
       }
     };
     fetchProducts();
@@ -106,13 +110,19 @@ const Collection = () => {
             <option value="highToLow">Price: High to Low</option>
           </select>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredProducts.map((product) => (
-            <ProductCard key={product._id} product={product} />
-          ))}
-        </div>
-        {filteredProducts.length === 0 && (
-          <p className="text-center mt-8 text-gray-500">No products found.</p>
+
+        {error ? (
+          <div className="text-center text-red-500">{error}</div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filteredProducts.length > 0 ? (
+              filteredProducts.map((product) => (
+                <ProductCard key={product._id} product={product} />
+              ))
+            ) : (
+              <p className="text-center mt-8 text-gray-500">No products found.</p>
+            )}
+          </div>
         )}
       </div>
     </div>
